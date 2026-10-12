@@ -69,6 +69,8 @@ Depending on the toolchain and the version of the ELMO example being used,
 modifications to
 [`thirdparty/elmo/Examples/elmoasmfunctions.s`](thirdparty/elmo/Examples/elmoasmfunctions.s)
 may be needed for the example to run correctly.
+When recompiling this file, add `.thumb_func` immediately above each function
+label so that every function is assembled as a Thumb function.
 
 After making or applying those modifications, compile the assembly file from
 the `thirdparty/elmo/Examples/` directory with:
