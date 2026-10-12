@@ -1,1 +1,8 @@
 output/
+
+elephant-dumbo/*.o
+elephant-dumbo/*.d
+elephant-dumbo/*.elf
+elephant-dumbo/*.bin
+elephant-dumbo/*.list
+elephant-dumbo/*.map

@@ -6,15 +6,23 @@ if [ -z "$1" ]; then
 fi
 
 if [ "$1" == "elmo" ]; then
-    cd thirdparty/elmo || exit
+    cd ./thirdparty/elmo || exit
     make clean
     make
 elif [ "$1" == "example" ]; then
-    cd thirdparty/elmo || exit
+    cd ./thirdparty/elmo || exit
     make clean
     make
 
     cd ./Examples/DPATraces/MBedAES || exit
+    make clean
+    make
+elif [ "$1" == "elephant" ]; then
+    cd ./thirdparty/elmo || exit
+    make clean
+    make
+
+    cd ../../elephant-dumbo || exit
     make clean
     make
 fi

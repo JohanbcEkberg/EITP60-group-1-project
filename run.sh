@@ -6,6 +6,9 @@ if [ -z "$1" ]; then
 fi
 
 if [ "$1" == "example" ]; then
-    cd thirdparty/elmo || exit
+    cd ./thirdparty/elmo || exit
     ./elmo ./Examples/DPATraces/MBedAES/MBedAES.bin
+elif [ "$1" == "elephant" ]; then
+    cd ./thirdparty/elmo || exit
+    ./elmo ../../elephant-dumbo/elephant_dumbo.bin
 fi

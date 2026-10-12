@@ -1,24 +1,3 @@
-build_elmo:
-	./build.sh elmo
-
-build_example:
-	./build.sh example
-
-build_elephant:
-	./build.sh elephant
-
-run_example:
-	./run.sh example
-
-run_elephant:
-	./run.sh elephant
-
-analyze_example:
-	python3 ./tools/analyze_traces.py example
-
-analyze_elephant:
-	python3 ./tools/analyze_traces.py elephant
-
 example:
 	mkdir -p output
 	./build.sh elmo
@@ -28,10 +7,14 @@ example:
 
 elephant:
 	mkdir -p output
+	./build.sh elmo
 	./build.sh elephant
 	./run.sh elephant
-	python3 ./tools/analyze_traces.py elephant
+	python3 ./tools/elmo_dumbo_cpa.py
 
 clean:
-	rm -rf output
-	rm -rf thirdparty/elmo/output
+	rm -rf ./thirdparty/elmo/output/traces
+	rm -rf ./output
+	rm -rf ./thirdparty/elmo/output
+	cd elephant-dumbo && make clean
+	cd thirdparty/elmo && make clean
