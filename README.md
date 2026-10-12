@@ -36,32 +36,34 @@ them with:
 git submodule update --init --recursive
 ```
 
-## Running the example
+## Make targets
 
-From the repository root, build ELMO, build the MBedAES example, generate
-traces, and run the trace analysis with:
+Run the commands below from the repository root:
 
 ```bash
 make example
 ```
 
-The individual stages can also be run separately:
+This builds ELMO and the `MBedAES` example, generates ELMO traces, and runs
+the standard trace analysis. The results are saved in `output/`.
+
+To run the reduced Elephant-Dumbo experiment instead:
 
 ```bash
-make build_elmo
-make build_example
-make run_example
-make analyze_example
+make elephant
 ```
 
-The complete example pipeline:
+This builds the target in [`elephant-dumbo/`](elephant-dumbo/), generates
+traces with ELMO, and runs the CPA script. The CPA results are written to
+`output/elephant_dumbo_cpa.csv`.
 
-1. Builds the ELMO simulator.
-2. Builds the `MBedAES` ARM Thumb binary.
-3. Runs ELMO on the binary.
-4. Writes the generated traces and analysis data.
-5. Saves `output/trace_analysis.png` and
-   `output/trace_analysis_summary.csv`.
+To remove generated binaries, traces, and analysis output:
+
+```bash
+make clean
+```
+
+The `clean` target does not remove source files or Git submodules.
 
 ## Recompiling `elmoasmfunctions.s`
 
@@ -69,8 +71,6 @@ Depending on the toolchain and the version of the ELMO example being used,
 modifications to
 [`thirdparty/elmo/Examples/elmoasmfunctions.s`](thirdparty/elmo/Examples/elmoasmfunctions.s)
 may be needed for the example to run correctly.
-When recompiling this file, add `.thumb_func` immediately above each function
-label so that every function is assembled as a Thumb function.
 
 After making or applying those modifications, compile the assembly file from
 the `thirdparty/elmo/Examples/` directory with:
@@ -80,22 +80,25 @@ arm-none-eabi-gcc -mthumb -mcpu=cortex-m4 -c elmoasmfunctions.s -o elmoasmfuncti
 ```
 
 The resulting `elmoasmfunctions.o` is linked into the example by the
-`MBedAES` Makefile. Re-run the example build after recompiling the object:
+`MBedAES` Makefile. Re-run `make example` after recompiling the object.
 
-```bash
-make build_example
-make run_example
-```
+## Elephant-Dumbo ELMO experiment
 
-## Cleaning generated files
+The paper's real experiment applies CPA to physical power traces from an
+unprotected Elephant-Dumbo implementation on an STM32F303 Cortex-M4. It
+targets the first Spongent round while absorbing the first associated-data
+block. The original target sources, leakage models, and attack code are
+available in [`thirdparty/nist-lwc-power-analysis/`](thirdparty/nist-lwc-power-analysis/).
 
-To remove generated analysis output and ELMO output files:
+This repository includes a smaller ELMO reproduction in
+[`elephant-dumbo/`](elephant-dumbo/).
+It runs only the first 160-bit Spongent round, randomizes associated data,
+and performs CPA on four mask bytes. Full-key recovery and the paper's
+exhaustive-search correction are intentionally omitted.
 
-```bash
-make clean
-```
-
-This does not remove source files or the Git submodules.
+The target is compiled for ELMO's
+Thumb-1/M0-compatible emulator; this is a simulator adaptation, not a claim
+that ELMO emulates the STM32F303 Cortex-M4 instruction set.
 
 ## License and upstream projects
 
