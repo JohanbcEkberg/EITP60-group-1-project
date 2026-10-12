@@ -1,0 +1,3 @@
+[submodule "thirdparty/nist-lwc-power-analysis"]
+	path = thirdparty/nist-lwc-power-analysis
+	url = git@github.com:kudelskisecurity/nist-lwc-power-analysis.git
