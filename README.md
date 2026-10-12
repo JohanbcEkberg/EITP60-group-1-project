@@ -33,7 +33,7 @@ The ELMO and NIST LWC repositories are Git submodules. Clone and initialise
 them with:
 
 ```bash
-git submodule update --init --recursive
+git submodule update --init
 ```
 
 ## Make targets
